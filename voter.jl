@@ -29,16 +29,19 @@ A[L+2,:] = A[2,:]
 A[:,1] = A[:,L+1]
 A[:,L+2] = A[:,2]
 
-plt.clf()
-plt.ion()
-plt.imshow(A[2:L+1,2:L+1])
-plt.show()
+#plt.clf()
+#plt.ion()
+#plt.imshow(A[2:L+1,2:L+1])
+#plt.show()
 
 v1m = Float64[]
 v2m = Float64[]
 
 v1t = Float64[]
 v2t = Float64[]
+
+w1t = Float64[]
+m2t = Float64[]
 
     
 for k=1:perc*L*L
@@ -49,14 +52,26 @@ for k=1:perc*L*L
    push!(v2m,A[rand(2:L+1),rand(2:L+1)])
 end
     
-v1 = median(v1m)
-v2 = median(v2m)
+v1 = 0.5*rand()
+v2 = 0.5*rand()+0.5
+
+for i=2:L+1
+   for j=2:L+1
+       if closest(A[i,j],v1,v2)==v1
+           B[i,j] = 0
+       else
+           B[i,j] = 1
+       end
+   end
+end
 
 push!(v1t,v1)
 push!(v2t,v2)
+push!(w1t,sum(B[2:L+1,2:L+1])/L^2)
+push!(m2t,mean(A[2:L+1,2:L+1]))
 
-for i=1:100
-    for j=1:10000
+for i=1:200
+    for j=1:100000
     # Pick a site and direction
         x = rand(2:(L+1))
         y = rand(2:(L+1))
@@ -88,8 +103,9 @@ for i=1:100
         end
     # End update boundaries         
     end
-    plt.imshow(A[2:L+1,2:L+1])
-    plt.draw()
+    
+#    plt.imshow(A[2:L+1,2:L+1])
+#    plt.draw()
     
 # Change candidates
     v1m = Float64[]
@@ -102,11 +118,32 @@ for i=1:100
     for k=1:perc*L*L
        push!(v2m,A[rand(2:L+1),rand(2:L+1)])
     end
-    
-    v1 = median(v1m)
-    v2 = median(v2m)
+
+    v1 = (v1+median(v1m))/2
+    v2 = (v2+median(v2m))/2
+
+    for i=2:L+1
+    for j=2:L+1
+        if closest(A[i,j],v1,v2)==v1
+            B[i,j] = 0
+        else
+            B[i,j] = 1
+        end
+    end
+    end
+
     push!(v1t,v1)
     push!(v2t,v2)
-    
+    push!(w1t,sum(B[2:L+1,2:L+1])/L^2)
+    push!(m2t,mean(A[2:L+1,2:L+1]))
 end
+
+plt.close()
+plot(v1t)
+plot(v2t)
+plot(w1t)
+plot(m2t)
+
+[v1t v2t w1t m2t]
+
 
