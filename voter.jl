@@ -2,81 +2,78 @@ using PyPlot
 MersenneTwister()
 
 # Parameters
+nc = 3                  #number of candidates
+L = 100                 #lattice dimension
+nswps = 200             #number of sweeps
 
-L = 100
-
-neigh = 0.25
-cand  = 0.25
-me    = 1-neigh-cand
-perc  = 0.1
+neigh = 0.5             #neighbor weight
+cand  = 0.0             #closest candidate weight
+me    = 1-neigh-cand    #own weight
+perc  = 0.1             #percentage of data candidates have
 
 # Functions
 
-function closest(x,v1,v2)
-    if abs(x-v1)/abs(x-v2)<1
-        v1
-    else
-        v2
+function closest(x,v)
+    res = v[1]
+    for i = 2:length(v)
+    if abs(x-res) < abs(x-v[i])
+        res = v[i]
     end
+    end
+    res
 end
 
 # Start
 
 A = rand(L+2,L+2)
+B = copy(A)
 
 A[1,:] = A[L+1,:]
 A[L+2,:] = A[2,:]
 A[:,1] = A[:,L+1]
 A[:,L+2] = A[:,2]
 
-#plt.clf()
-#plt.ion()
-#plt.imshow(A[2:L+1,2:L+1])
-#plt.show()
+plt.clf()
+plt.ion()
+plt.imshow(A[2:L+1,2:L+1])
+plt.show()
 
-v1m = Float64[]
-v2m = Float64[]
+vm = zeros(Float64,int(perc*L*L),nc)
+vt = zeros(Float64,nswps+1,nc)
+wt = zeros(Float64,nswps+1)
 
-v1t = Float64[]
-v2t = Float64[]
-
-w1t = Float64[]
-m2t = Float64[]
 
     
 for k=1:perc*L*L
-   push!(v1m,A[rand(2:L+1),rand(2:L+1)])
+  for l=1:nc
+   vm[k,l]=A[rand(2:L+1),rand(2:L+1)]
+  end
 end
     
-for k=1:perc*L*L
-   push!(v2m,A[rand(2:L+1),rand(2:L+1)])
-end
-    
-v1 = 0.5*rand()
-v2 = 0.5*rand()+0.5
+v = rand(nc)
 
 for i=2:L+1
    for j=2:L+1
-       if closest(A[i,j],v1,v2)==v1
+       if closest(A[i,j],v)==v[1]
            B[i,j] = 0
-       else
+       elseif closest(A[i,j],v)==v[2]
            B[i,j] = 1
+       else
+           B[i,j] = 2
        end
    end
 end
 
-push!(v1t,v1)
-push!(v2t,v2)
-push!(w1t,sum(B[2:L+1,2:L+1])/L^2)
-push!(m2t,mean(A[2:L+1,2:L+1]))
+vt[1,:] =  v'
+wt[1] = sum(B[2:L+1,2:L+1])/L^2
 
-for i=1:200
-    for j=1:100000
+for i=1:nswps
+    for j=1:10000
     # Pick a site and direction
         x = rand(2:(L+1))
         y = rand(2:(L+1))
         r = rand()
-        cc = closest(A[x,y],v1,v2)
+        cc = closest(A[x,y],v)
     # Average with your neighbor
         if r<0.25
             A[x,y] = me*A[x-1,y]+neigh*A[x,y]+cand*cc
@@ -104,46 +101,49 @@ for i=1:200
     # End update boundaries         
     end
     
-#    plt.imshow(A[2:L+1,2:L+1])
-#    plt.draw()
+    plt.imshow(A[2:L+1,2:L+1])
+    plt.draw()
     
 # Change candidates
-    v1m = Float64[]
-    v2m = Float64[]
+    vm = zeros(Float64,int(perc*L*L),nc)
     
     for k=1:perc*L*L
-       push!(v1m,A[rand(2:L+1),rand(2:L+1)])
+    for l=1:nc
+      vm[k,l]=A[rand(2:L+1),rand(2:L+1)]
+    end
     end
     
-    for k=1:perc*L*L
-       push!(v2m,A[rand(2:L+1),rand(2:L+1)])
+    for k=1:nc
+      v[k] = (v[k]+median(vm[k,:]))/2
     end
-
-    v1 = (v1+median(v1m))/2
-    v2 = (v2+median(v2m))/2
 
     for i=2:L+1
     for j=2:L+1
-        if closest(A[i,j],v1,v2)==v1
-            B[i,j] = 0
-        else
-            B[i,j] = 1
-        end
+       if closest(A[i,j],v)==v[1]
+           B[i,j] = 0
+       elseif closest(A[i,j],v)==v[2]
+           B[i,j] = 1
+       else
+           B[i,j] = 2
+       end
     end
     end
 
-    push!(v1t,v1)
-    push!(v2t,v2)
-    push!(w1t,sum(B[2:L+1,2:L+1])/L^2)
-    push!(m2t,mean(A[2:L+1,2:L+1]))
+    vt[i,:] =  v'
+    wt[i] = sum(B[2:L+1,2:L+1])/L^2
 end
 
-plt.close()
-plot(v1t)
-plot(v2t)
-plot(w1t)
-plot(m2t)
+outfile = open("voter_mod.txt", "w")
+    writedlm(outfile,A[2:L+1,2:L+1],"\t")
+close(outfile)
 
-[v1t v2t w1t m2t]
+
+plt.close()
+plot(vt[:,1])
+plot(vt[:,2])
+plot(vt[:,3])
+plot(wt)
+
+[vt wt]
 
 
