@@ -17,6 +17,7 @@
 \usepackage{bm}
 \usepackage{booktabs}
 \usepackage{scrextend}
+\usepackage[font={small,it}]{caption}
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -104,6 +105,23 @@ The last difference that one can think to introduce is a way for the opinion of 
 Starting from the assumption that the candidate only cares about winning (as in Hotelling's game), it is possible to think that through some mean, like surveys or online data such as Twitter, Facebook or Google, each candidate is able to know what is the distribution of opinions of people. Of course it is very unlikely for her to be able to sample the entire population, so let's assume she is able to sample only a small fraction of the population. Given the data available to her, she may decide to take the position of the median of the distribution she found if she only cares about winning. Otherwise, she could decide to take as her position the arithmetic mean of the median of the distribution and her position if for some reason she also cares about the policy.
 
 \section*{Results}
+\begin{figure}
+\includegraphics[scale=1]{pictures/voter_mod-crop.pdf}
+\caption{Modified voter model stationary state on a 2D lattice. Opinions are in the interval $[0,1]$}
+\label{fig:voter.mod}
+\end{figure}
+
+One of the first interesting things that is possible to see, is that the modified voter model, the one in which the opinions of people fill an entire continuum interval, has a stationary state, that looks like the one in Figure \ref{fig:voter.mod}. However, it is also possible to notice that, even if the initial distribution was a uniform distribution over the interval $[0,1]$, the distribution is changed at the stationary state, and it is neither uniform nor over the the same interval.
+If in this situation the candidate are able to sample the opinions of the population, they both change their policy to be the median of the population distribution.
+
+As soon as we introduce the possibility for the candidates to influence the opinions of people, the easy guess is that the opinions of people and the ones of the candidates converge towards the same stable value, and that is exactly what happens. Of course there will be fluctuations, and people will choose to vote the candidate which is closer to them. What is possible to see, is that in the end fluctuations decide the outcome of elections, and that both candidates have the same probability to win. Thus, even if \emph{everybody agrees with everybody}, fluctuations make the outcome of the electoral competition very unpredictable.
+
+A similar thing happens when considering a more complex situation, when for instance there are three different candidates.
+A stationary states is reached in which everybody basically agrees with everybody, with very small fluctuations that govern the dynamics of the system. 
+
+
+
+
 
 \section*{Conclusions}
 

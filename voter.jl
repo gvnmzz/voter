@@ -2,12 +2,12 @@ using PyPlot
 MersenneTwister()
 
 # Parameters
-nc = 3                  #number of candidates
+nc = 2                  #number of candidates
 L = 100                 #lattice dimension
 nswps = 200             #number of sweeps
 
-neigh = 0.5             #neighbor weight
-cand  = 0.0             #closest candidate weight
+neigh = 0.3             #neighbor weight
+cand  = 0.1             #closest candidate weight
 me    = 1-neigh-cand    #own weight
 perc  = 0.1             #percentage of data candidates have
 
@@ -33,14 +33,14 @@ A[L+2,:] = A[2,:]
 A[:,1] = A[:,L+1]
 A[:,L+2] = A[:,2]
 
-plt.clf()
-plt.ion()
-plt.imshow(A[2:L+1,2:L+1])
-plt.show()
+#plt.clf()
+#plt.ion()
+#plt.imshow(A[2:L+1,2:L+1])
+#plt.show()
 
 vm = zeros(Float64,int(perc*L*L),nc)
-vt = zeros(Float64,nswps+1,nc)
-wt = zeros(Float64,nswps+1)
+vt = zeros(Float64,nswps,nc)
+wt = zeros(Float64,nswps,nc)
 
 
     
@@ -100,10 +100,10 @@ for i=1:nswps
         end
     # End update boundaries         
     end
-    
-    plt.imshow(A[2:L+1,2:L+1])
-    plt.draw()
-    
+
+#    plt.imshow(A[2:L+1,2:L+1])
+#    plt.draw()
+
 # Change candidates
     vm = zeros(Float64,int(perc*L*L),nc)
     
@@ -113,37 +113,39 @@ for i=1:nswps
     end
     end
     
-    for k=1:nc
-      v[k] = (v[k]+median(vm[k,:]))/2
+    for l=1:nc
+      v[l] = (v[l]+median(vm[:,l]))/2
     end
 
-    for i=2:L+1
+    for l=2:L+1
     for j=2:L+1
-       if closest(A[i,j],v)==v[1]
-           B[i,j] = 0
-       elseif closest(A[i,j],v)==v[2]
-           B[i,j] = 1
+       if closest(A[l,j],v)==v[1]
+           B[l,j] = 0
+           wt[i,1] += 1
+       elseif closest(A[l,j],v)==v[2]
+           B[l,j] = 1
+           wt[i,2] += 1
        else
-           B[i,j] = 2
+           B[l,j] = 2
+           wt[i,3] += 1
        end
     end
     end
-
     vt[i,:] =  v'
-    wt[i] = sum(B[2:L+1,2:L+1])/L^2
 end
 
-outfile = open("voter_mod.txt", "w")
-    writedlm(outfile,A[2:L+1,2:L+1],"\t")
+outfile = open("voter_mod_three.txt", "w")
+#    writedlm(outfile,[vt wt],"\t")
+    writedlm(outfile,B[2:L+1,2:L+1],"\t")
 close(outfile)
 
 
-plt.close()
-plot(vt[:,1])
-plot(vt[:,2])
-plot(vt[:,3])
-plot(wt)
+#plt.close()
+#plot(vt[:,1])
+#plot(vt[:,2])
+#plot(vt[:,3])
+#plot(wt/2)
 
-[vt wt]
-
+#[vt wt]
+#println(mean(wt[50:end]/2)," ",std(wt[50:end])/2)
 
