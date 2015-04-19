@@ -136,7 +136,7 @@ end
 
 outfile = open("voter_mod_three.txt", "w")
 #    writedlm(outfile,[vt wt],"\t")
-    writedlm(outfile,B[2:L+1,2:L+1],"\t")
+    writedlm(outfile,[vt wt],"\t")
 close(outfile)
 
 

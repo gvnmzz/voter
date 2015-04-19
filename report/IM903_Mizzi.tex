@@ -117,11 +117,13 @@ If in this situation the candidate are able to sample the opinions of the popula
 As soon as we introduce the possibility for the candidates to influence the opinions of people, the easy guess is that the opinions of people and the ones of the candidates converge towards the same stable value, and that is exactly what happens. Of course there will be fluctuations, and people will choose to vote the candidate which is closer to them. What is possible to see, is that in the end fluctuations decide the outcome of elections, and that both candidates have the same probability to win. Thus, even if \emph{everybody agrees with everybody}, fluctuations make the outcome of the electoral competition very unpredictable.
 
 A similar thing happens when considering a more complex situation, when for instance there are three different candidates.
-A stationary states is reached in which everybody basically agrees with everybody, with very small fluctuations that govern the dynamics of the system. 
+A stationary states is reached in which everybody basically agrees with everybody, with very small fluctuations that govern the dynamics of the system. Since the opinions are distributed with a very narrow symmetric distribution centred on the median, the candidate whose policy is in the middle of the other two candidates always get a very negligible number of votes, while the other two candidates are equally probable to be elected. But looking at the stationary state for some time steps allows to see the situation is always changing, with all of the candidates passing about a third of the time in the middle of the other two. This means that, even with simulations, it is impossible to predict the outcome of the elections in these conditions.
 
+Going back to the case of only two candidates, the model also shows that if one of the two candidates possess information about the opinion distribution, that candidate is going to wind the election with certainty. That is because the other candidate does not know where the median is and thus cannot shift her policy.
 
-
-
+Finally, it is interesting to see the how the probability of winning varies with the amount of information available to the candidates. To study this, the amount of information available to one of the candidates is kept constant, while the one available to the other spans a certain range. In particular while candidate one always gets information about $1\%$ of population, candidate one gets information for a value in $[0.2\%,5\%]$ in steps of $0.2$. It is possible to see that there is in fact a dependence of the 
+probability of being elected on the amount of information that the candidates possesses, but it is very slight.
+The candidates initial policy are $p_1=0$ and $p_2=1$, while the population have opinions uniformly distributed in $[0,1]$.
 
 \section*{Conclusions}
 
