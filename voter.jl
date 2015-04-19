@@ -22,9 +22,10 @@ function closest(x,v)
     end
     res
 end
+outfile = open("voter_m2.txt", "w")
 
 # Start
-
+for perc2 = 0.01:0.002:0.2
 A = rand(L+2,L+2)
 B = copy(A)
 
@@ -38,17 +39,19 @@ A[:,L+2] = A[:,2]
 #plt.imshow(A[2:L+1,2:L+1])
 #plt.show()
 
-vm = zeros(Float64,int(perc*L*L),nc)
+vm = zeros(Float64,int(perc*L*L))
+vm2 = zeros(Float64,int(perc2*L*L))
 vt = zeros(Float64,nswps,nc)
 wt = zeros(Float64,nswps,nc)
 
 
     
 for k=1:perc*L*L
-  for l=1:nc
-   vm[k,l]=A[rand(2:L+1),rand(2:L+1)]
-  end
+   vm[k]=A[rand(2:L+1),rand(2:L+1)]
 end
+for k=1:perc2*L*L
+   vm2[k]=A[rand(2:L+1),rand(2:L+1)]
+end   
     
 v = rand(nc)
 
@@ -105,18 +108,19 @@ for i=1:nswps
 #    plt.draw()
 
 # Change candidates
-    vm = zeros(Float64,int(perc*L*L),nc)
+    vm = zeros(Float64,int(perc*L*L))
+    vm2 = zeros(Float64,int(perc2*L*L))
     
     for k=1:perc*L*L
-    for l=1:nc
-      vm[k,l]=A[rand(2:L+1),rand(2:L+1)]
+        vm[k]=A[rand(2:L+1),rand(2:L+1)]
     end
-    end
-    
-    for l=1:nc
-      v[l] = (v[l]+median(vm[:,l]))/2
-    end
+    for k=1:perc2*L*L
+        vm2[k]=A[rand(2:L+1),rand(2:L+1)]
+    end   
 
+      v[1] = (v[1]+median(vm))/2
+      v[2] = (v[2]+median(vm2))/2
+      
     for l=2:L+1
     for j=2:L+1
        if closest(A[l,j],v)==v[1]
@@ -132,11 +136,14 @@ for i=1:nswps
     end
     end
     vt[i,:] =  v'
+
 end
 
-outfile = open("voter_mod_three.txt", "w")
+
 #    writedlm(outfile,[vt wt],"\t")
-    writedlm(outfile,[vt wt],"\t")
+    writedlm(outfile,[perc2 mean(wt[100:200,1]) std(wt[100:200,1])],"\t")
+
+end
 close(outfile)
 
 
