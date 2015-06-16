@@ -1,3 +1,32 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{Hotelling1929}
+Harold Hotelling.
+\newblock {Stability in competition}.
+\newblock {\em The Economic Journal}, 39(153):41--57, 1929.
+
+\bibitem{Clifford1973}
+Peter Clifford and Aidan Sudbury.
+\newblock {A model for spatial conflict}.
+\newblock {\em Biometrika}, 60(3):581--588, 1973.
+
+\bibitem{Galam2002}
+S.~Galam.
+\newblock {Minority opinion spreading in random geometry}.
+\newblock {\em European Physical Journal B}, 25(4):403--406, 2002.
+
+\bibitem{Nowak1990}
+Andrzej Nowak, Jacek Szamrej, and Bibb Latan\'{e}.
+\newblock {From private attitude to public opinion: A dynamic theory of social
+  impact.}, 1990.
+
+\bibitem{Deffuant2000}
+Guillaume Deffuant, David Neau, Frederic Amblard, and G\'{e}rard Weisbuch.
+\newblock {Mixing beliefs among interacting agents}, 2000.
+
+\bibitem{Hegselmann2002}
+Rainer Hegselmann and Ulrich Krause.
+\newblock {Opinion Dynamics and Bounded Confidence}.
+\newblock {\em Simulation}, 5(3):2, 2002.
 
 \end{thebibliography}
