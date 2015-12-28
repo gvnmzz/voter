@@ -1,19 +1,18 @@
-using PyPlot
-MersenneTwister()
+#srand(1235)
 
 # Parameters
 nc = 2                  #number of candidates
 L = 100                 #lattice dimension
 nswps = 200             #number of sweeps
 
-neigh = 0.3             #neighbor weight
-cand  = 0.1             #closest candidate weight
+neigh = 0.1             #neighbor weight
+cand  = 0             #closest candidate weight
 me    = 1-neigh-cand    #own weight
 perc  = 0.1             #percentage of data candidates have
 
 # Functions
-
 function closest(x,v)
+# This function calculates the closest candidate
     res = v[1]
     for i = 2:length(v)
     if abs(x-res) < abs(x-v[i])
@@ -22,37 +21,39 @@ function closest(x,v)
     end
     res
 end
-outfile = open("voter_m2.txt", "w")
+
+# Set the output file
+outfile = open("mizzi.txt", "w")
 
 # Start
-for perc2 = 0.01:0.002:0.2
 A = rand(L+2,L+2)
+# This is needed for the final election result
 B = copy(A)
 
+
+#Periodic boundary conditions with gost border
 A[1,:] = A[L+1,:]
 A[L+2,:] = A[2,:]
 A[:,1] = A[:,L+1]
 A[:,L+2] = A[:,2]
 
-#plt.clf()
-#plt.ion()
-#plt.imshow(A[2:L+1,2:L+1])
-#plt.show()
 
-vm = zeros(Float64,int(perc*L*L))
-vm2 = zeros(Float64,int(perc2*L*L))
-vt = zeros(Float64,nswps,nc)
-wt = zeros(Float64,nswps,nc)
+vm1 = zeros(Float64,round(Int,perc*L*L))      #candidate 1 poll
+vm2 = zeros(Float64,round(Int,perc*L*L))      #candidate 2 poll
+vt = zeros(Float64,nswps,nc)                  #opinion at time t
+wt = zeros(Float64,nswps,nc)                  #votes at time t
 
 
-    
-for k=1:perc*L*L
-   vm[k]=A[rand(2:L+1),rand(2:L+1)]
+#create the poll for candidate 1
+for k=1:round(Int,perc*L*L)
+   vm1[k]=A[rand(2:L+1),rand(2:L+1)]
 end
-for k=1:perc2*L*L
+#create the poll for candidate 2
+for k=1:round(Int,perc*L*L)
    vm2[k]=A[rand(2:L+1),rand(2:L+1)]
-end   
-    
+end
+
+#take a random guy
 v = rand(nc)
 
 for i=2:L+1
@@ -79,6 +80,7 @@ for i=1:nswps
         cc = closest(A[x,y],v)
     # Average with your neighbor
         if r<0.25
+            dist = abs(A[x,y])
             A[x,y] = me*A[x-1,y]+neigh*A[x,y]+cand*cc
         elseif r>0.25 && r<0.5
             A[x,y] = me*A[x,y+1]+neigh*A[x,y]+cand*cc
@@ -87,8 +89,8 @@ for i=1:nswps
         elseif r>0.75
             A[x,y] = me*A[x,y-1]+neigh*A[x,y]+cand*cc
         end
-        
-    # Update boundaries        
+
+    # Update boundaries
         if x==2
             A[L+2,y]=A[x,y]
         end
@@ -101,26 +103,23 @@ for i=1:nswps
         if y==L+1
             A[x,1]=A[x,y]
         end
-    # End update boundaries         
+    # End update boundaries
     end
-
-#    plt.imshow(A[2:L+1,2:L+1])
-#    plt.draw()
 
 # Change candidates
-    vm = zeros(Float64,int(perc*L*L))
-    vm2 = zeros(Float64,int(perc2*L*L))
-    
-    for k=1:perc*L*L
-        vm[k]=A[rand(2:L+1),rand(2:L+1)]
-    end
-    for k=1:perc2*L*L
-        vm2[k]=A[rand(2:L+1),rand(2:L+1)]
-    end   
+    vm1 = zeros(Float64,round(Int,perc*L*L))
+    vm2 = zeros(Float64,round(Int,perc*L*L))
 
-      v[1] = (v[1]+median(vm))/2
+    for k=1:round(Int,perc*L*L)
+        vm1[k]=A[rand(2:L+1),rand(2:L+1)]
+    end
+    for k=1:round(Int,perc*L*L)
+        vm2[k]=A[rand(2:L+1),rand(2:L+1)]
+    end
+
+      v[1] = (v[1]+median(vm1))/2
       v[2] = (v[2]+median(vm2))/2
-      
+
     for l=2:L+1
     for j=2:L+1
        if closest(A[l,j],v)==v[1]
@@ -140,19 +139,10 @@ for i=1:nswps
 end
 
 
-#    writedlm(outfile,[vt wt],"\t")
-    writedlm(outfile,[perc2 mean(wt[100:200,1]) std(wt[100:200,1])],"\t")
+writedlm(outfile,[vt wt],"\t")
+#writedlm(outfile,[perc mean(wt[100:200,1]) std(wt[100:200,1])],"\t")
 
-end
 close(outfile)
 
-
-#plt.close()
-#plot(vt[:,1])
-#plot(vt[:,2])
-#plot(vt[:,3])
-#plot(wt/2)
-
-#[vt wt]
-#println(mean(wt[50:end]/2)," ",std(wt[50:end])/2)
-
+[vt wt]
+println(mean(wt[50:end]/2)," ",std(wt[50:end])/2)

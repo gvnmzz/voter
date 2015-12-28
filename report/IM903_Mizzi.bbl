@@ -1,32 +1,93 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem{Hotelling1929}
-Harold Hotelling.
-\newblock {Stability in competition}.
-\newblock {\em The Economic Journal}, 39(153):41--57, 1929.
+\bibitem[Anjaria and Guddeti(2014)]{Anjaria2014}
+M.~Anjaria and R.~M.~R. Guddeti.
+\newblock {Influence factor based opinion mining of Twitter data using
+  supervised learning}.
+\newblock In \emph{2014 6th International Conference on Communication Systems
+  and Networks, COMSNETS 2014}, 2014.
+\newblock ISBN 9781479936359.
+\newblock \doi{10.1109/COMSNETS.2014.6734907}.
 
-\bibitem{Clifford1973}
-Peter Clifford and Aidan Sudbury.
+\bibitem[Caldarelli et~al.(2014)Caldarelli, Chessa, Pammolli, Pompa, Puliga,
+  Riccaboni, and Riotta]{Caldarelli2014}
+G.~Caldarelli, A.~Chessa, F.~Pammolli, G.~Pompa, M.~Puliga, M.~Riccaboni, and
+  G.~Riotta.
+\newblock {A multi-level geographical study of italian political elections from
+  twitter data}.
+\newblock \emph{PLoS ONE}, 9\penalty0 (5), 2014.
+\newblock ISSN 19326203.
+\newblock \doi{10.1371/journal.pone.0095809}.
+
+\bibitem[Cha et~al.(2010)Cha, Haddai, Benevenuto, and Gummadi]{Cha2010}
+M.~Cha, H.~Haddai, F.~Benevenuto, and K.~P. Gummadi.
+\newblock {Measuring User Influence in Twitter : The Million Follower Fallacy}.
+\newblock In \emph{International AAAI Conference on Weblogs and Social Media},
+  pages 10--17, 2010.
+\newblock ISBN 9781450304931.
+\newblock \doi{10.1.1.167.192}.
+\newblock URL \url{http://www.icwsm.org/2010/}.
+
+\bibitem[Clifford and Sudbury(1973)]{Clifford1973}
+P.~Clifford and A.~Sudbury.
 \newblock {A model for spatial conflict}.
-\newblock {\em Biometrika}, 60(3):581--588, 1973.
+\newblock \emph{Biometrika}, 60\penalty0 (3):\penalty0 581--588, 1973.
+\newblock ISSN 0006-3444.
+\newblock \doi{10.1093/biomet/60.3.581}.
 
-\bibitem{Galam2002}
+\bibitem[Deffuant et~al.(2000)Deffuant, Neau, Amblard, and
+  Weisbuch]{Deffuant2000}
+G.~Deffuant, D.~Neau, F.~Amblard, and G.~Weisbuch.
+\newblock {Mixing beliefs among interacting agents}, 2000.
+\newblock ISSN 0219-5259.
+
+\bibitem[Galam(2002)]{Galam2002}
 S.~Galam.
 \newblock {Minority opinion spreading in random geometry}.
-\newblock {\em European Physical Journal B}, 25(4):403--406, 2002.
+\newblock \emph{European Physical Journal B}, 25\penalty0 (4):\penalty0
+  403--406, 2002.
+\newblock ISSN 14346028.
+\newblock \doi{10.1007/s10051-002-8929-9}.
 
-\bibitem{Nowak1990}
-Andrzej Nowak, Jacek Szamrej, and Bibb Latan\'{e}.
+\bibitem[Hegselmann and Krause(2002)]{Hegselmann2002}
+R.~Hegselmann and U.~Krause.
+\newblock {Opinion Dynamics and Bounded Confidence}.
+\newblock \emph{Simulation}, 5\penalty0 (3):\penalty0 2, 2002.
+\newblock ISSN 14607425.
+\newblock \doi{citeulike-article-id:613092}.
+
+\bibitem[Hotelling(1929)]{Hotelling1929}
+H.~Hotelling.
+\newblock {Stability in competition}.
+\newblock \emph{The Economic Journal}, 39\penalty0 (153):\penalty0 41--57,
+  1929.
+\newblock ISSN 00130133.
+\newblock \doi{10.1007/978-1-4613-8905-7\_4}.
+
+\bibitem[Kunda(1990)]{Kunda1990}
+Z.~Kunda.
+\newblock {The case for motivated reasoning.}
+\newblock \emph{Psychological bulletin}, 108\penalty0 (3):\penalty0 480--498,
+  1990.
+\newblock ISSN 0033-2909.
+\newblock \doi{10.1037/0033-2909.108.3.480}.
+
+\bibitem[Mooney(2011)]{Mooney2011}
+C.~Mooney.
+\newblock {The Science of Why We Don't Believe Science}.
+\newblock \emph{Mother Jones}, 2011.
+\newblock URL
+  \url{http://www.motherjones.com/politics/2011/03/denial-science-chris-mooney}.
+
+\bibitem[Nowak et~al.(1990)Nowak, Szamrej, and Latan\'{e}]{Nowak1990}
+A.~Nowak, J.~Szamrej, and B.~Latan\'{e}.
 \newblock {From private attitude to public opinion: A dynamic theory of social
   impact.}, 1990.
-
-\bibitem{Deffuant2000}
-Guillaume Deffuant, David Neau, Frederic Amblard, and G\'{e}rard Weisbuch.
-\newblock {Mixing beliefs among interacting agents}, 2000.
-
-\bibitem{Hegselmann2002}
-Rainer Hegselmann and Ulrich Krause.
-\newblock {Opinion Dynamics and Bounded Confidence}.
-\newblock {\em Simulation}, 5(3):2, 2002.
+\newblock ISSN 0033-295X.
 
 \end{thebibliography}
